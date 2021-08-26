@@ -22,8 +22,8 @@ import {
   useSingleContractMultipleData,
 } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/hooks'
-import useStakingInfo from './useStakingInfo'
 import { DualRewardsInfo, useDualStakeRewards } from './useDualStakeRewards'
+import useStakingInfo from './useStakingInfo'
 
 export const POOF_DUAL_POOL = '0x969D7653ddBAbb42589d73EfBC2051432332A940'
 export const POOF_DUAL_LP = '0x573bcEBD09Ff805eD32df2cb1A968418DC74DCf7'

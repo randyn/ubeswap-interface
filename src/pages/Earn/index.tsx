@@ -11,14 +11,7 @@ import { CardNoise, CardSection, DataCard } from '../../components/earn/styled'
 import Loader from '../../components/Loader'
 import { RowBetween } from '../../components/Row'
 import { BIG_INT_ZERO } from '../../constants'
-import {
-  MOO_DUAL_POOL1,
-  MOO_DUAL_POOL2,
-  MOO_LP1,
-  MOO_LP2,
-  POOF_DUAL_LP,
-  StakingInfo,
-} from '../../state/stake/hooks'
+import { MOO_DUAL_POOL1, MOO_DUAL_POOL2, MOO_LP1, MOO_LP2, POOF_DUAL_LP, StakingInfo } from '../../state/stake/hooks'
 import { ExternalLink, TYPE } from '../../theme'
 import { DualPoolCard } from './DualPoolCard'
 import { COUNTDOWN_END, LaunchCountdown } from './LaunchCountdown'

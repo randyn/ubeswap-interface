@@ -94,7 +94,9 @@ export const PoolCard: React.FC<Props> = ({ stakingInfo, dualRewards }: Props) =
   let dollarRewardPerYear = useAnnualRewardDollars(stakingInfo.rewardToken, stakingInfo.totalRewardRate)
   const ubeRewardPerYear = useAnnualRewardDollars(ube, stakingInfo.totalUBERewardRate)
   dollarRewardPerYear =
-    dualRewards && dollarRewardPerYear ? dollarRewardPerYear.add(ubeRewardPerYear) : dollarRewardPerYear
+    dualRewards && dollarRewardPerYear && ubeRewardPerYear
+      ? dollarRewardPerYear.add(ubeRewardPerYear)
+      : dollarRewardPerYear
   const apyFraction =
     stakingInfo.active && valueOfTotalStakedAmountInCUSD && !valueOfTotalStakedAmountInCUSD.equalTo('0')
       ? dollarRewardPerYear?.divide(valueOfTotalStakedAmountInCUSD)
