@@ -2,6 +2,7 @@ import { ErrorBoundary } from '@sentry/react'
 import { JSBI } from '@ubeswap/sdk'
 import { partition } from 'lodash'
 import React, { useMemo } from 'react'
+import useStakingInfo from 'state/stake/useStakingInfo'
 import styled from 'styled-components'
 
 import { AutoColumn } from '../../components/Column'
@@ -17,7 +18,6 @@ import {
   MOO_LP2,
   POOF_DUAL_LP,
   StakingInfo,
-  useStakingInfo,
 } from '../../state/stake/hooks'
 import { ExternalLink, TYPE } from '../../theme'
 import { DualPoolCard } from './DualPoolCard'
