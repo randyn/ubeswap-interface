@@ -1,7 +1,7 @@
-import { JSBI, Pair, Token, TokenAmount } from '@ubeswap/sdk'
+import { useContractKit } from '@celo-tools/use-contractkit'
+import { ChainId as UbeswapChainId, JSBI, Pair, Token, TokenAmount } from '@ubeswap/sdk'
 import { STAKING_REWARDS_INTERFACE } from 'constants/abis/staking-rewards'
 import { UBE } from 'constants/tokens'
-import { useActiveWeb3React } from 'hooks'
 import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
 import { useMemo } from 'react'
 import { NEVER_RELOAD, useMultipleContractSingleData } from 'state/multicall/hooks'
@@ -10,7 +10,8 @@ import { StakingInfo, useStakingPools } from './hooks'
 
 // Gets the staking info from the network for the active chain id
 export default function useStakingInfo(pairToFilterBy?: Pair | null, stakingAddress?: string): readonly StakingInfo[] {
-  const { chainId, account } = useActiveWeb3React()
+  const { network, address } = useContractKit()
+  const chainId = network.chainId as unknown as UbeswapChainId
   const ube = chainId ? UBE[chainId] : undefined
 
   // detect if staking is ended
@@ -21,7 +22,7 @@ export default function useStakingInfo(pairToFilterBy?: Pair | null, stakingAddr
   // These are the staking pools
   const rewardsAddresses = useMemo(() => info.map(({ stakingRewardAddress }) => stakingRewardAddress), [info])
 
-  const accountArg = useMemo(() => [account ?? undefined], [account])
+  const accountArg = useMemo(() => [address ?? undefined], [address])
 
   // get all the info from the staking rewards contracts
   const balances = useMultipleContractSingleData(rewardsAddresses, STAKING_REWARDS_INTERFACE, 'balanceOf', accountArg)

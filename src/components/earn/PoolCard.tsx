@@ -1,6 +1,6 @@
+import { useContractKit } from '@celo-tools/use-contractkit'
 import { Percent } from '@ubeswap/sdk'
 import QuestionHelper, { LightQuestionHelper } from 'components/QuestionHelper'
-import { useActiveWeb3React } from 'hooks'
 import { useStakingPoolValue } from 'pages/Earn/useStakingPoolValue'
 import React from 'react'
 import { useAnnualRewardDollars } from 'state/stake/useAnnualRewardDollars'
@@ -81,7 +81,8 @@ export const PoolCard: React.FC<Props> = ({ stakingInfo, dualRewards }: Props) =
   // get the color of the token
   const token = token0.symbol?.startsWith('m') ? token1 : token0
   const backgroundColor = useColor(token)
-  const { chainId } = useActiveWeb3React()
+  const { network } = useContractKit()
+  const { chainId } = network
   const ube = chainId ? UBE[chainId] : undefined
 
   // get the USD value of staked WETH
