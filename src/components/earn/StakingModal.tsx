@@ -48,15 +48,15 @@ export default function StakingModal({ isOpen, onDismiss, stakingInfo, userLiqui
   const { parsedAmount, error } = useDerivedStakeInfo(typedValue, stakingInfo.stakingToken, userLiquidityUnstaked)
   const parsedAmountWrapped = parsedAmount
 
-  let hypotheticalUbeRewardRate: TokenAmount = new TokenAmount(stakingInfo.ubeRewardRate.token, '0')
-  let hypotheticalRewardRate: TokenAmount = new TokenAmount(stakingInfo.rewardRate.token, '0')
+  let hypotheticalPrimayrRewardRate: TokenAmount = new TokenAmount(stakingInfo.ubeRewardRate.token, '0')
+  let hypotheticalSecondaryRewardRate: TokenAmount = new TokenAmount(stakingInfo.rewardRate.token, '0')
   if (parsedAmountWrapped?.greaterThan('0')) {
-    hypotheticalUbeRewardRate = stakingInfo.getHypotheticalRewardRate(
+    hypotheticalPrimayrRewardRate = stakingInfo.getHypotheticalRewardRate(
       stakingInfo.stakedAmount ? parsedAmountWrapped.add(stakingInfo.stakedAmount) : parsedAmountWrapped,
       stakingInfo.totalStakedAmount.add(parsedAmountWrapped),
       stakingInfo.totalUBERewardRate
     )
-    hypotheticalRewardRate = stakingInfo.getHypotheticalRewardRate(
+    hypotheticalSecondaryRewardRate = stakingInfo.getHypotheticalRewardRate(
       stakingInfo.stakedAmount ? parsedAmountWrapped.add(stakingInfo.stakedAmount) : parsedAmountWrapped,
       stakingInfo.totalStakedAmount.add(parsedAmountWrapped),
       stakingInfo.totalRewardRate
@@ -143,21 +143,21 @@ export default function StakingModal({ isOpen, onDismiss, stakingInfo, userLiqui
             id="stake-liquidity-token"
           />
 
-          <HypotheticalRewardRate dim={!hypotheticalUbeRewardRate.greaterThan('0')}>
+          <HypotheticalRewardRate dim={!hypotheticalPrimayrRewardRate.greaterThan('0')}>
             <div>
               <TYPE.black fontWeight={600}>Weekly Rewards</TYPE.black>
             </div>
 
             <div>
               <TYPE.black>
-                {hypotheticalUbeRewardRate
+                {hypotheticalPrimayrRewardRate
                   .multiply((60 * 60 * 24 * 7).toString())
                   .toSignificant(4, { groupSeparator: ',' })}{' '}
-                UBE / week
+                {stakingInfo.ubeRewardRate.token.symbol ?? 'UBE'} / week
               </TYPE.black>
               {stakingInfo?.dualRewards && (
                 <TYPE.black>
-                  {hypotheticalRewardRate
+                  {hypotheticalSecondaryRewardRate
                     .multiply((60 * 60 * 24 * 7).toString())
                     .toSignificant(4, { groupSeparator: ',' })}{' '}
                   {stakingInfo?.rewardToken?.symbol} / week
